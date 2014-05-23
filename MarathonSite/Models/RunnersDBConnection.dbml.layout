@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="RunnersDBConnection">
+  <DataContextMoniker Name="/RunnersDBConnectionDataContext" />
+  <nestedChildShapes>
+    <classShape Id="188306e3-0661-4ecf-baf1-1ab69b41bf59" absoluteBounds="2.75, 1.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/RunnersDBConnectionDataContext/Runner" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e64a9ad4-7aed-426a-9661-4918370eeebc" absoluteBounds="2.7649999999999997, 1.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

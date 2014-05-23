@@ -9,8 +9,8 @@ namespace MarathonSite.Models
     public class SearchParser
     {
         private string matchFirstName = "^[A-z]+";
-        private string matchLastName = "[A-z]+$";
-        private string matchBibNumber = "^[0-9]$";
+        private string matchLastName = "[A-z]$+";
+        private string matchBibNumber = "^[0-9]$+";
 
         public string query
         {

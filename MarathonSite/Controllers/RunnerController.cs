@@ -12,10 +12,23 @@ namespace MarathonSite.Controllers
         //
         // GET: /Runner/
 
-        //databse connection called db
+        RunnersDBConnectionDataContext db = new RunnersDBConnectionDataContext();
 
+        /*
+         * Use @Html.ActionLink("[text to appear on page]", "[method name in controller]", "Runner", [arguments to controller method])
+         * To generate links that call controller methods
+         * For example, on the search results page, use this method for each
+         * runner to call the View method with a Runner object
+         */
+
+        /*
+         * Make index stronly typed to SearchParser
+         * Make search bar a text box for SearchParser's query field (@Html.textBoxFor(m=>m.query))
+         * @ViewBag.RunnerCount will give the number of runners in the database
+         */
         public ActionResult Index()
         {
+            ViewBag.RunnerCount = db.Runners.Count();
             return View();
         }
 
@@ -27,22 +40,22 @@ namespace MarathonSite.Controllers
             {
                 if (s.lastName != null)
                 {
-                    l = (from a in runners
-                         where a.firstName == s.firstName && a.lastName == s.lastName
-                         select a).toList();
+                    l = (from a in db.Runners
+                         where a.FirstName == s.firstName && a.LastName == s.lastName
+                         select a).ToList<Runner>();
                 }
                 else
                 {
-                    l = (from a in runners
-                         where a.firstName == s.firstName || a.firstName == s.lastName
-                         select a).toList();
+                    l = (from a in db.Runners
+                         where a.FirstName == s.firstName || a.FirstName == s.lastName
+                         select a).ToList<Runner>();
                 }
             }
             else if (s.bibNumber != null)
             {
-                l = (from a in runners
-                     where a.bibNumber == s.bibNumber
-                     select a).toList();
+                l = (from a in db.Runners
+                     where a.BibNumber == s.bibNumber
+                     select a).ToList<Runner>();
             }
             else
             {
@@ -52,6 +65,9 @@ namespace MarathonSite.Controllers
             return RedirectToAction("SearchResults", l);
         }
 
+        //strongly typed to List<Runner>
+        //use foreach(Runner r in model) to iterate
+        //you can put HTML code in the C# loop to make a table
         public ActionResult SearchResults(List<Runner> l)
         {
             if (l.Count == 0)
@@ -66,16 +82,21 @@ namespace MarathonSite.Controllers
             }
         }
 
+        //not strongly typed; just say the search didn't match any runners in the databse
         public ActionResult EmptySearch()
         {
             return View();
         }
 
+        //strongly typed to Runner
+        //have a button to edit
         public ActionResult View(Runner r)
         {
             return View(r);
         }
-
+        
+        //strongly typed to Runner
+        //ViewBag.Error contains an error string if they sumbit an invalid Runner
         [HttpPost]
         public ActionResult Edit(Runner r, bool redirect)
         {
@@ -96,11 +117,13 @@ namespace MarathonSite.Controllers
             }
         }
 
+        //strongly typed to Runner
         public ActionResult Add()
         {
             return View();
         }
 
+        //ViewBag.Error will contain an error string if they sumbit an invalid Runner
         [HttpPost]
         public ActionResult Add(Runner r)
         {
