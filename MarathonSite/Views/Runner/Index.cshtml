@@ -1,22 +1,60 @@
 ﻿@model MarathonSite.Models.SearchResult
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Vermont City Marathon - Search Runners";
 }
-<h2>Index</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.LabelFor(m => m.SearchQuery)
-    @Html.TextBoxFor(m => m.SearchQuery)
-    <input type="submit" value="search" />
-}
-@if (Model.SearchResults != null)
-{
-    foreach (var runner in Model.SearchResults)
-    {
-    <p>@runner.FirstName @runner.LastName
-        <a href="~/Runner/Get/@runner.Id">Runner Details</a>
-    </p>
-    }
-}
+<div class="container">
+
+    <h2>Vermont City Marathon</h2>
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "form-control", placeholder = "search for runners" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="search" class="btn btn-default btn-block" />
+            </div>
+
+        }
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Bib Number</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th style="width:120px">Actions</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    
+                    @if (Model.SearchResults != null)
+                    {
+                        foreach (var runner in Model.SearchResults)
+                        {
+                            <tr>
+                                <td>@runner.BibNumber</td>
+                                <td>@runner.FirstName @runner.LastName</td>
+                                <td>N/A</td>
+                                <td>
+                                    <a href="~/Runner/View/@runner.Id" class="btn btn-default"><i class="fa fa-fw fa-info-circle" title="View Details"></i></a>
+                                    <a href="~/Runner/Edit/@runner.Id" class="btn btn-danger"><i class="fa fa-fw fa-pencil" title="Edit Details"></i> </a>
+                                </td>
+
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

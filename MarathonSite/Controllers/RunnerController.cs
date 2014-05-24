@@ -12,7 +12,7 @@ namespace MarathonSite.Controllers
         //
         // GET: /Runner/
 
-        RunnersDBConnectionDataContext db = new RunnersDBConnectionDataContext();
+        private RunnersDBConnectionDataContext db = new RunnersDBConnectionDataContext();
 
         /*
          * Use @Html.ActionLink("[text to appear on page]", "[method name in controller]", "Runner", [arguments to controller method])
@@ -26,22 +26,19 @@ namespace MarathonSite.Controllers
          * Make search bar a text box for SearchParser's query field (@Html.textBoxFor(m=>m.query))
          * @ViewBag.RunnerCount will give the number of runners in the database
          */
+
         public ActionResult Index()
         {
-            ViewBag.RunnerCount = db.Runners.Count();
-
             SearchResult sr = new SearchResult();
-
-
             return View(sr);
         }
 
-        public ActionResult Get(int id)
-        {
-            var runner = db.Runners.Where(m => m.Id == id).Single();
+        //public ActionResult Get(int id)
+        //{
+        //    var runner = db.Runners.Where(m => m.Id == id).Single();
 
-            return View(runner);
-        }
+        //    return View(runner);
+        //}
 
         //[HttpPost]
         //public ActionResult Index(SearchParser s)
