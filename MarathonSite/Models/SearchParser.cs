@@ -14,7 +14,9 @@ namespace MarathonSite.Models
 
         public string query
         {
-            get;
+            get {
+                return this.query;
+            }
             set
             {
                 query = value;

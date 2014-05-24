@@ -29,40 +29,62 @@ namespace MarathonSite.Controllers
         public ActionResult Index()
         {
             ViewBag.RunnerCount = db.Runners.Count();
-            return View();
+
+            SearchResult sr = new SearchResult();
+
+
+            return View(sr);
         }
 
-        [HttpPost]
-        public ActionResult Index(SearchParser s)
+        public ActionResult Get(int id)
         {
-            List<Runner> l;
-            if (s.firstName != null)
-            {
-                if (s.lastName != null)
-                {
-                    l = (from a in db.Runners
-                         where a.FirstName == s.firstName && a.LastName == s.lastName
-                         select a).ToList<Runner>();
-                }
-                else
-                {
-                    l = (from a in db.Runners
-                         where a.FirstName == s.firstName || a.FirstName == s.lastName
-                         select a).ToList<Runner>();
-                }
-            }
-            else if (s.bibNumber != null)
-            {
-                l = (from a in db.Runners
-                     where a.BibNumber == s.bibNumber
-                     select a).ToList<Runner>();
-            }
-            else
-            {
-                return RedirectToAction("EmptySearch");
-            }
+            var runner = db.Runners.Where(m => m.Id == id).Single();
 
-            return RedirectToAction("SearchResults", l);
+            return View(runner);
+        }
+
+        //[HttpPost]
+        //public ActionResult Index(SearchParser s)
+        //{
+        //    List<Runner> l;
+        //    if (s.firstName != null)
+        //    {
+        //        if (s.lastName != null)
+        //        {
+        //            l = (from a in db.Runners
+        //                 where a.FirstName == s.firstName && a.LastName == s.lastName
+        //                 select a).ToList<Runner>();
+        //        }
+        //        else
+        //        {
+        //            l = (from a in db.Runners
+        //                 where a.FirstName == s.firstName || a.FirstName == s.lastName
+        //                 select a).ToList<Runner>();
+
+        //        }
+        //    }
+        //    else if (s.bibNumber != null)
+        //    {
+        //        l = (from a in db.Runners
+        //             where a.BibNumber == s.bibNumber
+        //             select a).ToList<Runner>();
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("EmptySearch");
+        //    }
+
+        //    return RedirectToAction("SearchResults", l);
+        //}
+
+        [HttpPost]
+        public ActionResult Index(SearchResult sr)
+        {
+            if (sr.SearchQuery != null)
+            {
+                sr.SearchResults = db.Runners.Where(m => m.FirstName.Contains(sr.SearchQuery)).ToList();
+            }
+            return View("Index", sr);
         }
 
         //strongly typed to List<Runner>
@@ -77,7 +99,9 @@ namespace MarathonSite.Controllers
             else if (l.Count == 1)
             {
                 return RedirectToAction("View", l[0]);
-            } else {
+            }
+            else
+            {
                 return View(l);
             }
         }
@@ -90,11 +114,11 @@ namespace MarathonSite.Controllers
 
         //strongly typed to Runner
         //have a button to edit
-        public ActionResult View(Runner r)
-        {
-            return View(r);
-        }
-        
+        //public ActionResult View(Runner r)
+        //{
+        //    return View(r);
+        //}
+
         //strongly typed to Runner
         //ViewBag.Error contains an error string if they sumbit an invalid Runner
         [HttpPost]
@@ -110,8 +134,10 @@ namespace MarathonSite.Controllers
                 else
                 {
                     return View(r);
-                }                
-            } else {
+                }
+            }
+            else
+            {
                 ViewBag.Error = error;
                 return View(r);
             }

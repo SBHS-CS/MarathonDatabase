@@ -1,0 +1,22 @@
+﻿@model MarathonSite.Models.SearchResult
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(m => m.SearchQuery)
+    @Html.TextBoxFor(m => m.SearchQuery)
+    <input type="submit" value="search" />
+}
+@if (Model.SearchResults != null)
+{
+    foreach (var runner in Model.SearchResults)
+    {
+    <p>@runner.FirstName @runner.LastName
+        <a href="~/Runner/Get/@runner.Id">Runner Details</a>
+    </p>
+    }
+}

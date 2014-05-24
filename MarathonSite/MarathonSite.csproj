@@ -137,6 +137,7 @@
       <DependentUpon>RunnersDBConnection.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchParser.cs" />
+    <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\Verification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,6 +234,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Runner\Index.cshtml" />
+    <Content Include="Views\Runner\Get.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
